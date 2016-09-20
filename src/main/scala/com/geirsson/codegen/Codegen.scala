@@ -61,6 +61,11 @@ case class Codegen(options: CodegenOptions, namingStrategy: NamingStrategy) {
     }
   }
 
+  def norm(name: String): String = name match {
+    case "type" => "`type`"
+    case s => s
+  }
+
   def getForeignKeys(db: Connection): Set[ForeignKey] = {
     val foreignKeys =
       db.getMetaData.getExportedKeys(null, options.schema, null)
@@ -155,7 +160,7 @@ case class Codegen(options: CodegenOptions, namingStrategy: NamingStrategy) {
 
   case class SimpleColumn(tableName: String, columnName: String) {
     def toType =
-      s"${namingStrategy.table(tableName)}.${namingStrategy.table(columnName)}"
+      s"${namingStrategy.table(tableName)}.${norm(namingStrategy.table(columnName))}"
   }
 
   case class Column(tableName: String,
@@ -174,7 +179,7 @@ case class Codegen(options: CodegenOptions, namingStrategy: NamingStrategy) {
     def toType: String = this.toSimple.toType
 
     def toArg(namingStrategy: NamingStrategy, tableName: String): String = {
-      s"${namingStrategy.column(columnName)}: ${makeOption(this.toType)}"
+      s"${norm(namingStrategy.column(columnName))}: ${makeOption(this.toType)}"
     }
 
     def toSimple = references.getOrElse(SimpleColumn(tableName, columnName))
@@ -189,7 +194,7 @@ case class Codegen(options: CodegenOptions, namingStrategy: NamingStrategy) {
       val scalaName = namingStrategy.table(name)
       val args = columns.map(_.toArg(namingStrategy, scalaName)).mkString(", ")
       val applyArgs = columns.map { column =>
-        s"${namingStrategy.column(column.columnName)}: ${column.scalaOptionType}"
+        s"${norm(namingStrategy.column(column.columnName))}: ${column.scalaOptionType}"
       }.mkString(", ")
       val applyArgNames = columns.map { column =>
         val typName = if (column.references.nonEmpty) {
@@ -198,9 +203,9 @@ case class Codegen(options: CodegenOptions, namingStrategy: NamingStrategy) {
           namingStrategy.table(column.columnName)
         }
         if (column.nullable) {
-          s"${namingStrategy.column(column.columnName)}.map($typName.apply)"
+          s"${norm(namingStrategy.column(column.columnName))}.map($typName.apply)"
         } else {
-          s"$typName(${namingStrategy.column(column.columnName)})"
+          s"$typName(${norm(namingStrategy.column(column.columnName))})"
         }
       }.mkString(", ")
       val classes =
