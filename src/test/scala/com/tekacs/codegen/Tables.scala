@@ -1,4 +1,4 @@
-package com.geirsson.codegen
+package com.tekacs.codegen
 import java.util.Date
 import io.getquill.WrappedValue
 

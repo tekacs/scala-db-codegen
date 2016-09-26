@@ -1,4 +1,4 @@
-package com.geirsson.codegen
+package com.tekacs.codegen
 
 import io.getquill.NamingStrategy
 
@@ -13,7 +13,8 @@ trait SnakeCaseReverse extends NamingStrategy {
   override def default(s: String): String = {
     s.toLowerCase
       .split("_")
-      .map { // avoid possible collisions caused by multiple '_'
+      .map {
+        // avoid possible collisions caused by multiple '_'
         case "" => "_"
         case s => s
       }

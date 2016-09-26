@@ -1,4 +1,4 @@
-package com.geirsson.codegen
+package com.tekacs.codegen
 
 object Versions {
   val nightly = "0.2.1"

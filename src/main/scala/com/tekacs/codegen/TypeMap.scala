@@ -1,6 +1,7 @@
-package com.geirsson.codegen
+package com.tekacs.codegen
 
 import scala.util.control.NonFatal
+import scala.meta._
 
 import caseapp.core.ArgParser
 
@@ -10,7 +11,7 @@ object TypeMap {
       try {
         val pairs = s.split(";").map { pair =>
           val from :: to :: Nil = pair.split(",", 2).toList
-          from -> to
+          from -> to.parse[Type].get
         }
         Right(TypeMap(pairs: _*))
       } catch {
@@ -19,17 +20,17 @@ object TypeMap {
       }
     }
   val default = TypeMap(
-    "text" -> "String",
-    "float8" -> "Double",
-    "numeric" -> "BigDecimal",
-    "int4" -> "Int",
-    "int8" -> "Long",
-    "bool" -> "Boolean",
-    "varchar" -> "String",
-    "serial" -> "Int",
-    "bigserial" -> "Long",
-    "timestamp" -> "Date"
+    "text" -> t"String",
+    "float8" -> t"Double",
+    "numeric" -> t"BigDecimal",
+    "int4" -> t"Int",
+    "int8" -> t"Long",
+    "bool" -> t"Boolean",
+    "varchar" -> t"String",
+    "serial" -> t"Int",
+    "bigserial" -> t"Long",
+    "timestamp" -> t"java.util.Date"
   )
 }
 
-case class TypeMap(pairs: (String, String)*)
+case class TypeMap(pairs: (String, Type)*)
