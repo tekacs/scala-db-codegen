@@ -1,8 +1,8 @@
-# scala-db-codegen <!-- [![Build Status][travisImg]](travisLink) [![Maven][mavenImg]][mavenLink] -->
+# scala-db-codegen
 Generate Scala code from your database to use with the incredble library [quill](https://github.com/getquill/quill).
 Only tested with postgresql, but could in theory work with any jdbc compliant database.
 
-This is a rewrite of the original implementation by [olafurpg](originalRepo).
+This is a rewrite of the original implementation by [olafurpg][originalRepo].
 
 Builds and Maven artifact incoming! Watch this space.
 
@@ -112,7 +112,6 @@ Usage: db-codegen <version> [options]
 ```
 
 ### Standalone library
-<!-- [![Maven][mavenImg]][mavenLink] -->
 
 ```scala
 // 2.11 only
@@ -191,4 +190,4 @@ I'll give some examples of that in repos alongside this in the time to come. :sm
 [mavenImg]: https://img.shields.io/maven-central/v/com.geirsson/scala-db-codegen_2.11.svg
 [mavenLink]: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scala-db-codegen_2.11%22%20g%3A%22com.geirsson%22
 
-[originalRepo]: https://github.com/olafurpg/scala-db-codegen
+[originalRepo]: olafurpg/scala-db-codegen
