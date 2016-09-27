@@ -12,7 +12,10 @@ class TypeMapper[NM <: NameMapper](nameMapper: NM) {
   private val promises = concurrent.TrieMap[DBType, Promise[Option[NamedType[_]]]]()
   private var isDone = false
 
+  def beforeDone(): Boolean = true
+
   def done(): Unit = {
+    if (!beforeDone()) return
     isDone = true
     promises.foreach {
       case (typ, promise) => promise success resolvedTypes.get(typ)
