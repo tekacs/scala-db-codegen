@@ -6,6 +6,8 @@ This is a rewrite of the original implementation by [olafurpg][originalRepo].
 
 Builds and Maven artifact incoming! Watch this space.
 
+[My TODO list for this project is here][todo] - I have big plans, assuming I have time to work on them. :)
+
 ## What does it do?
 
 Say you have some database with this schema
@@ -191,3 +193,5 @@ I'll give some examples of that in repos alongside this in the time to come. :sm
 [mavenLink]: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scala-db-codegen_2.11%22%20g%3A%22com.geirsson%22
 
 [originalRepo]: https://github.com/olafurpg/scala-db-codegen
+
+[todo]: https://www.notion.so/scala-db-codegen-7904e8b9ee134b5db6de283bc89d633f
