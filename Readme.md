@@ -153,6 +153,21 @@ hopefully learn more about jdbc along the way :)
 
 ## Changelog
 
+### 0.3.0 (on fork com.tekacs.codegen)
+
+* Major rewrite - two classes remaining from he original code. ;)
+* The generator now works in multiple passes, compiler-style - DB fetching, name mapping, type mapping, code generation.
+* Reskin code generation on top of scala.meta.
+  * Scala keywords are now properly escaped (`type` -> `` `type` ``).
+  * scala.meta's guarantees that the generated code's structure is 'correct'.
+  * Codegen is now extensible along a few axes and backed by the above guarantees.
+* Types are now resolved in a deferred fashion.
+  * It's possible to hook in your own completely custom type resolution (override `TypeMapper`).
+  * For simpler cases (e.g. Postgres enums), you can simply insert types by overriding `beforeDone` in `TypeMapper`.
+    * You can also add a generator in `class Generator` to materialise those types in reaction to them being detected!
+  * At the moment knowing when to complete resolution is a hack (since most DB type resolution is single-level, the default `TypeMapper` doesn't provide a real dependency graph).
+* A bunch of utilities are included to make working with scala.meta a little easier for this use case.
+
 ### 0.2.1
 
 * No longer abort on missing key in `--type-map`, see #3. Thanks @nightscape!
