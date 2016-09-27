@@ -191,4 +191,4 @@ I'll give some examples of that in repos alongside this in the time to come. :sm
 [mavenImg]: https://img.shields.io/maven-central/v/com.geirsson/scala-db-codegen_2.11.svg
 [mavenLink]: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scala-db-codegen_2.11%22%20g%3A%22com.geirsson%22
 
-[originalRepo]: olafurpg/scala-db-codegen
+[originalRepo]: https://github.com/olafurpg/scala-db-codegen
