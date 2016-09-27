@@ -1,7 +1,10 @@
-# scala-db-codegen [![Build Status][travisImg]](travisLink) [![Maven][mavenImg]][mavenLink]
+# scala-db-codegen <!-- [![Build Status][travisImg]](travisLink) [![Maven][mavenImg]][mavenLink] -->
 Generate Scala code from your database to use with the incredble library [quill](https://github.com/getquill/quill).
 Only tested with postgresql, but could in theory work with any jdbc compliant database.
 
+This is a rewrite of the original implementation by [olafurpg](originalRepo).
+
+Builds and Maven artifact incoming! Watch this space.
 
 ## What does it do?
 
@@ -63,28 +66,25 @@ object Tables {
 
 ![Type all the things!](https://cdn.meme.am/instances/500x/71298545.jpg)
 
-It could in theory also generate the code differently.
+If you don't like this, you can extend the code generation along several axes - hints are in the release notes below, for now.
 
-## CLI
-
-Download 13kb bootstrap script
-[`scala-db-codegen`](https://github.com/olafurpg/scala-db-codegen/blob/master/scala-db-codegen)
-and execute it.
-The script will download all dependencies on first execution.
+## Usage
 
 ```bash
-# print to stdout, works with running postgres instance on
-# localhost:5432 with user "postgres", password "postgres" and database "postgres"
-$ scala-db-codegen
-# Override any default settings with flags.
-$ scala-db-codegen --user myuser --password mypassword --url jdbc:postgresql://myhost:8888/postgres --file Tables.scala --type-map "bool,Boolean;int4,Int;int8,Long"
+$ git clone https://github.com/tekacs/scala-db-codegen
+$ cd scala-db-codegen
+## print to stdout, works with running postgres instance on
+## localhost:5432 with user "postgres", password "postgres" and database "postgres"
+$ sbt run
+## Override any default settings with flags.
+$ sbt 'run --user myuser --password mypassword --url jdbc:postgresql://myhost:8888/postgres --file Tables.scala --type-map "bool,Boolean;int4,Int;int8,Long"'
 ...
 ```
 
 For more details:
 ```shell
-$ scala-db-codegen --help
-Usage: scala-db-codegen [options]
+$ sbt 'run --help'
+Usage: db-codegen <version> [options]
   --usage
         Print usage and exit
   --help | -h
@@ -111,17 +111,17 @@ Usage: scala-db-codegen [options]
         Write generated code to this filename. Prints to stdout if not set.
 ```
 
-## Standalone library
-[![Maven][mavenImg]][mavenLink]
+### Standalone library
+<!-- [![Maven][mavenImg]][mavenLink] -->
 
 ```scala
 // 2.11 only
-libraryDependencies += "com.geirsson" %% "scala-db-codegen" % "<version>"
+libraryDependencies += "com.tekacs" %% "scala-db-codegen" % "<version>"
 ```
 
 Consult the source code, at least for now ;)
 
-## SBT
+### As a subproject
 
 Clone this repo into a subdirectory of your project. In your build.sbt:
 
@@ -139,17 +139,20 @@ codegen/runMain com.geirsson.codegen.Codegen --package tables --file myfile.scal
 
 Hack on the code to further customize to your needs.
 
-## Why not slick-codgen?
+## Why not slick-codegen?
 
-The Slick code generator is excellent and please use that if you are using Slick.
-Really, the slick codegenerator is extremely customizable and can probably even
-do stuff that this library does.
+You can see olafurpg's rationale over at [the original repo](originalRepo).
 
-I created this library because I struggled to get the slick code generator
-to do exactly what I wanted.
-Instead of learning more about slick models and which methods to override
-on the slick code generator, I decided to roll my own code generator and
-hopefully learn more about jdbc along the way :)
+My rationale is this.
+
+Quill works very closely to basic case classes. There are a wealth of Scala libraries which also work spectacularly well with structured denoted by case classes.
+ 
+This fork makes it easy and *reliable* to generate arbitrary code corresponding to every table, column and custom type in your database. There are all sorts of uses for this, such as generating serialisers `JSON.writes[ColumnClass]` and annotations `@annot class TableClass`).
+
+For a database-centric application, with clever use of the above code generation and awesome Scala libraries, it's even possible to generate an entire, working application solely from your DB schema!
+
+I'll give some examples of that in repos alongside this in the time to come. :smile: 
+(Hint: generate JSON serialisers and akka-http routes)
 
 ## Changelog
 
@@ -187,3 +190,5 @@ hopefully learn more about jdbc along the way :)
 
 [mavenImg]: https://img.shields.io/maven-central/v/com.geirsson/scala-db-codegen_2.11.svg
 [mavenLink]: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scala-db-codegen_2.11%22%20g%3A%22com.geirsson%22
+
+[originalRepo]: olafurpg/scala-db-codegen
