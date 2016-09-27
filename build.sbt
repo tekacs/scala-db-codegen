@@ -47,7 +47,6 @@ lazy val `db-codegen` =
       version := com.tekacs.codegen.Versions.nightly,
       packMain := Map("scala-db-codegen" -> "com.tekacs.codegen.Codegen"),
       libraryDependencies ++= Seq(
-        "com.geirsson" %% "scalafmt-core" % "0.3.0",
         "io.getquill" %% "quill-core" % "0.8.0",
         "com.h2database" % "h2" % "1.4.192",
         "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",

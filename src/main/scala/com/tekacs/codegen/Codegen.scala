@@ -5,11 +5,10 @@ import java.nio.file.{Files, Paths}
 import java.sql.{Connection, DriverManager, ResultSet}
 
 import caseapp.{AppOf, _}
-import org.scalafmt.{FormatResult, Scalafmt, ScalafmtStyle}
 
 import scala.concurrent.Await
-import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 import scala.language.implicitConversions
 import scala.meta._
 
@@ -89,19 +88,13 @@ object Codegen extends AppOf[CodegenOptions] {
       generatedCode <- new Generator(tables, options, mapper, typeMapper, meta).makePackage
       generatedText = generatedCode.syntax
     } yield {
-      val codeStyle = ScalafmtStyle.defaultWithAlign.copy(maxColumn = 120)
-      val styledCode = Scalafmt.format(generatedText, style = codeStyle) match {
-        case FormatResult.Success(x) => x
-        case _ => generatedText
-      }
-
       options.file match {
         case Some(uri) =>
-          Files.write(Paths.get(new File(uri).toURI), styledCode.getBytes)
+          Files.write(Paths.get(new File(uri).toURI), generatedText.getBytes)
           println(
             s"Done! Wrote to $uri (${System.currentTimeMillis() - startTime}ms)")
         case _ =>
-          outstream.println(styledCode)
+          outstream.println(generatedText)
       }
 
       db.close()
