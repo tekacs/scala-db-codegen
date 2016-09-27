@@ -6,7 +6,7 @@ This is a rewrite of the original implementation by [olafurpg][originalRepo].
 
 Builds and Maven artifact incoming! Watch this space.
 
-[My TODO list is here][todo] - I have big plans, assuming I have time to work on them. :)
+[My TODO list for this project is here][todo] - I have big plans, assuming I have time to work on them. :)
 
 ## What does it do?
 
