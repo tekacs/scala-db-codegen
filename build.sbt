@@ -11,7 +11,7 @@ lazy val publishSettings = Seq(
   },
   publishArtifact in Test := false,
   licenses := Seq(
-    "MIT" -> url("http://www.opensource.org/licenses/mit-license.php")),
+    "Apache 2" -> url("https://www.apache.org/licenses/LICENSE-2.0.txt")),
   homepage := Some(url("https://github.com/tekacs/scala-db-codegen")),
   autoAPIMappings := true,
   apiURL := Some(url("https://github.com/tekacs/scala-db-codegen")),
