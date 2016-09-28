@@ -98,7 +98,10 @@ class Generator[N <: NameMapper](val tables: Seq[DatabaseOps.Table],
 
       // Create `def create(id: Int, ...) = Table(TableName.Id(id), ...)` convenience function.
       val creatorParams = columnData.map { case (col, _, dbType) =>
-        param"${col.name.fieldName}: ${dbType.qualifiedClassName}" }
+        if (col.isNullable)
+          param"${col.name.fieldName}: Option[${dbType.qualifiedClassName}]"
+        else
+          param"${col.name.fieldName}: ${dbType.qualifiedClassName}" }
       val creatorArgs = columnData.map { case (col, typ, _) =>
         if (col.isNullable)
           arg"${col.name.fieldName}.map(${typ.qualifiedClassName.constructor}.apply)"
