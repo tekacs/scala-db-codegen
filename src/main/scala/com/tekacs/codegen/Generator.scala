@@ -163,6 +163,10 @@ object Generator {
     def statements: Seq[Stat]
   }
 
+  case class ChainForms(forms: GeneratedForm*) extends GeneratedForm {
+    def statements: Seq[Stat] = forms.flatMap(_.statements)(collection.breakOut)
+  }
+
   case class FullForm(mainClass: Defn.Class, companion: Defn.Object,
                       before: Seq[Stat] = Seq.empty, after: Seq[Stat] = Seq.empty)
     extends GeneratedForm {
